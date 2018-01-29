@@ -21,6 +21,7 @@ namespace WpfVjezba
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool isLastEquals = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,15 +34,34 @@ namespace WpfVjezba
         {
             Button b = (Button)sender;
 
+            if (isLastEquals && !(b.Content.ToString().Contains("+") || b.Content.ToString().Contains("-") ||
+                b.Content.ToString().Contains("/") || b.Content.ToString().Contains("*")) )
+            {
+                Clear_Textbox();
+            }
+
+            isLastEquals = false;
             TextBoxCalc.Text += b.Content.ToString()[1];
+            Keyboard.Focus(TextBoxCalc);
+        }
+
+        private void Clear_Textbox()
+        {
+            TextBoxCalc.Text = "";
+            Keyboard.Focus(TextBoxCalc);
         }
 
         private void Button_C_Click(object sender, RoutedEventArgs e)
         {
-            TextBoxCalc.Text = "";
+            Clear_Textbox();
         }
 
         private void Button_Equals_Click(object sender, RoutedEventArgs e)
+        {
+            Equals_Result();
+        }
+
+        private void Equals_Result()
         {
             char operator_sign = ReturnOperatorSign();
 
@@ -52,7 +72,8 @@ namespace WpfVjezba
                 return;
             }
 
-            TextBoxCalc.Text = Result_Equals(operator_sign);            
+            TextBoxCalc.Text = Result_Equals(operator_sign);
+            isLastEquals = true;
         }
 
         private char ReturnOperatorSign()
