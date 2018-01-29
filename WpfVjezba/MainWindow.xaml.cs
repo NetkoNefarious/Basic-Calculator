@@ -37,7 +37,7 @@ namespace WpfVjezba
             if (isLastEquals && !(b.Content.ToString().Contains("+") || b.Content.ToString().Contains("-") ||
                 b.Content.ToString().Contains("/") || b.Content.ToString().Contains("*")) )
             {
-                Clear_Textbox();
+                TextBoxCalc.Text = "";
             }
 
             isLastEquals = false;
@@ -45,15 +45,10 @@ namespace WpfVjezba
             Keyboard.Focus(TextBoxCalc);
         }
 
-        private void Clear_Textbox()
+        private void Button_C_Click(object sender, RoutedEventArgs e)
         {
             TextBoxCalc.Text = "";
             Keyboard.Focus(TextBoxCalc);
-        }
-
-        private void Button_C_Click(object sender, RoutedEventArgs e)
-        {
-            Clear_Textbox();
         }
 
         private void Button_Equals_Click(object sender, RoutedEventArgs e)
@@ -63,12 +58,10 @@ namespace WpfVjezba
 
         private void Equals_Result()
         {
-            char operator_sign = ReturnOperatorSign();
+            char operator_sign = CheckValidity();
 
             if (operator_sign == '!')
             {
-                MessageBox.Show("There's been an error!");
-                TextBoxCalc.Text = "";
                 return;
             }
 
@@ -76,31 +69,38 @@ namespace WpfVjezba
             isLastEquals = true;
         }
 
-        private char ReturnOperatorSign()
+        private char CheckValidity()
         {
-            if (TextBoxCalc.Text.Contains("+"))
+            char[] operators = { '+', '-', '*', '/' };
+            int operator_index = TextBoxCalc.Text.IndexOfAny(operators);
+
+            if (TextBoxCalc.Text[0] == '*' || TextBoxCalc.Text[0] == '/')
             {
-                return '+';
+                MessageBox.Show("You can't have an operator at the beginning of an expression.");
+                TextBoxCalc.Text = "";
             }
 
-            else if (TextBoxCalc.Text.Contains("-"))
+            if (operator_index == -1)
             {
-                return '-';
+                return '!';
             }
 
-            else if (TextBoxCalc.Text.Contains("*"))
+            else if (operator_index == TextBoxCalc.Text.Length - 1)
             {
-                return '*';
+                MessageBox.Show("You can't have an operator at the end of an expression.");
+                return '!';
             }
 
-            else if (TextBoxCalc.Text.Contains("/"))
+            else if (TextBoxCalc.Text.IndexOfAny(operators) == 0)
             {
-                return '/';
+
+
+                return '!';
             }
 
             else
             {
-                return '!';
+                return TextBoxCalc.Text[operator_index];
             }
         }
 
