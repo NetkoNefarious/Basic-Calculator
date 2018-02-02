@@ -22,7 +22,7 @@ namespace WpfVjezba
     public partial class MainWindow : Window
     {
         bool isLastEquals = false;
-        char[] operators = { '+', '-', '*', '/' };
+        readonly char[] operators = { '+', '-', '*', '/' }; 
 
         public MainWindow()
         {
@@ -42,16 +42,43 @@ namespace WpfVjezba
             }
 
             isLastEquals = false;
-            TextBoxCalc.Text += b.Content.ToString()[1];
+
+            if (CheckExprValidity(TextBoxCalc.Text, b.Content.ToString()[1]))
+            {
+                TextBoxCalc.Text += b.Content.ToString()[1];
+            }
+
+            else
+            {
+                MessageBox.Show("Invalid expression.");
+            }
+
             Keyboard.Focus(TextBoxCalc);
         }
 
-        private void Button_C_Click(object sender, RoutedEventArgs e)
+        private bool CheckExprValidity(string expression, char symbol)
         {
-            Clear_Text();
+            if (expression.Length != 0 && !Char.IsDigit(symbol))
+            {
+                // 1. case: if the + and - are at the end of the string
+                // 2. case: if the operator put in is already at the end of the string (to cover repeating operators)
+                if ((operators[0] == expression[expression.Length - 1] || operators[1] == expression[expression.Length - 1])
+                    || symbol == expression[expression.Length - 1])
+                {
+                    return false;
+                }
+            }
+
+            // 3. case: if the * and / are to be put at the beginning
+            else if (symbol == operators[2] || symbol == operators[3])
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        private void Clear_Text()
+        private void Button_C_Click(object sender, RoutedEventArgs e)
         {
             TextBoxCalc.Text = "";
             Keyboard.Focus(TextBoxCalc);
@@ -77,24 +104,22 @@ namespace WpfVjezba
 
         private int ReturnOperatorIndex(string expression)
         {
-            // Check for multiplication and division
-            int operator_index = expression.IndexOfAny(new char[] {'+', '-'}, 1);
+            int operator_index = expression.LastIndexOfAny(new char[] {'+', '-'});
 
-            if (operator_index == -1)
+            if (operator_index == 0)
             {
-                operator_index = expression.IndexOfAny(new char[] { '*', '/' }, 1);
+                operator_index = -1;
+            }
+
+            if (operator_index == -1 || operators.Contains(expression[operator_index - 1]))
+            {
+                operator_index = expression.LastIndexOfAny(new char[] { '*', '/' });
             }
 
             if (operator_index == expression.Length - 1)
             {
                 MessageBox.Show("You can't have an operator at the end of an expression.");
                 return -1;
-            }
-
-            if (expression[0] == '*' || expression[0] == '/')
-            {
-                MessageBox.Show("You can't have an operator at the beginning of an expression.");
-                TextBoxCalc.Text = "";
             }
 
             return operator_index;
@@ -129,7 +154,7 @@ namespace WpfVjezba
                 case '+':
                     return (op1 + op2).ToString();
                 case '-':
-                    return Math.Abs(op1 - op2).ToString();
+                    return (op1 - op2).ToString();
                 case '*':
                     return (op1 * op2).ToString();
                 case '/':
