@@ -22,6 +22,8 @@ namespace WpfVjezba
     public partial class MainWindow : Window
     {
         bool isLastEquals = false;
+        char[] operators = { '+', '-', '*', '/' };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,8 +36,7 @@ namespace WpfVjezba
         {
             Button b = (Button)sender;
 
-            if (isLastEquals && !(b.Content.ToString().Contains("+") || b.Content.ToString().Contains("-") ||
-                b.Content.ToString().Contains("/") || b.Content.ToString().Contains("*")) )
+            if (isLastEquals && b.Content.ToString().IndexOfAny(operators) != 1)
             {
                 TextBoxCalc.Text = "";
             }
@@ -46,6 +47,11 @@ namespace WpfVjezba
         }
 
         private void Button_C_Click(object sender, RoutedEventArgs e)
+        {
+            Clear_Text();
+        }
+
+        private void Clear_Text()
         {
             TextBoxCalc.Text = "";
             Keyboard.Focus(TextBoxCalc);
@@ -58,65 +64,72 @@ namespace WpfVjezba
 
         private void Equals_Result()
         {
-            char operator_sign = CheckValidity();
+            int operator_index = ReturnOperatorIndex(TextBoxCalc.Text);
 
-            if (operator_sign == '!')
+            if (operator_index == -1)
             {
                 return;
             }
 
-            TextBoxCalc.Text = Result_Equals(operator_sign);
+            TextBoxCalc.Text = Result_Equals(TextBoxCalc.Text);
             isLastEquals = true;
         }
 
-        private char CheckValidity()
+        private int ReturnOperatorIndex(string expression)
         {
-            char[] operators = { '+', '-', '*', '/' };
-            int operator_index = TextBoxCalc.Text.IndexOfAny(operators);
+            // Check for multiplication and division
+            int operator_index = expression.IndexOfAny(new char[] {'+', '-'}, 1);
 
-            if (TextBoxCalc.Text[0] == '*' || TextBoxCalc.Text[0] == '/')
+            if (operator_index == -1)
+            {
+                operator_index = expression.IndexOfAny(new char[] { '*', '/' }, 1);
+            }
+
+            if (operator_index == expression.Length - 1)
+            {
+                MessageBox.Show("You can't have an operator at the end of an expression.");
+                return -1;
+            }
+
+            if (expression[0] == '*' || expression[0] == '/')
             {
                 MessageBox.Show("You can't have an operator at the beginning of an expression.");
                 TextBoxCalc.Text = "";
             }
 
-            if (operator_index == -1)
-            {
-                return '!';
-            }
-
-            else if (operator_index == TextBoxCalc.Text.Length - 1)
-            {
-                MessageBox.Show("You can't have an operator at the end of an expression.");
-                return '!';
-            }
-
-            else if (TextBoxCalc.Text.IndexOfAny(operators) == 0)
-            {
-
-
-                return '!';
-            }
-
-            else
-            {
-                return TextBoxCalc.Text[operator_index];
-            }
+            return operator_index;
         }
 
-        private string Result_Equals(char operator_sign)
+        private string Result_Equals(string expression)
         {
-            string[] operands = TextBoxCalc.Text.Split(operator_sign);
+            int operator_index = ReturnOperatorIndex(expression);
+            char operator_sign = expression[operator_index];
 
-            double op1 = Convert.ToDouble(operands[0]);
-            double op2 = Convert.ToDouble(operands[1]);
+            string operand1 = expression.Substring(0, operator_index);
+            string operand2 = expression.Substring(operator_index + 1, expression.Length - operator_index - 1);
+
+            if (ReturnOperatorIndex(operand1) != -1)
+            {
+                operand1 = Result_Equals(operand1);
+            }
+
+            if (ReturnOperatorIndex(operand2) != -1)
+            {
+                if (operator_sign == '-')
+                    operand2 = "-" + operand2;
+
+                operand2 = Result_Equals(operand2);
+            }
+
+            double op1 = Convert.ToDouble(operand1);
+            double op2 = Convert.ToDouble(operand2);
 
             switch(operator_sign)
             {
                 case '+':
                     return (op1 + op2).ToString();
                 case '-':
-                    return (op1 - op2).ToString();
+                    return Math.Abs(op1 - op2).ToString();
                 case '*':
                     return (op1 * op2).ToString();
                 case '/':

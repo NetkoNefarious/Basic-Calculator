@@ -54,7 +54,7 @@
                 Width="130" Height="65" Click="Button_Click"/>
 
         <Button Name ="Button_C" Content="C" FontSize="35" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top"
-                Width="130" Height="65" Click="Button_C_Click"/>
+                Width="130" Height="65" Click="Button_C_Click" IsCancel="True"/>
         <Button Name ="Button_0" Content="_0" FontSize="35" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top"
                 Width="130" Height="65" Click="Button_Click"/>
         <Button Name ="Button_Equals" Content="=" FontSize="35" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"
