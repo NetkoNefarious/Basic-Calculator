@@ -12,3 +12,17 @@ C:\Users\Jakov\source\repos\WpfVjezba\WpfVjezba\obj\Debug\WpfVjezba.csproj.Gener
 C:\Users\Jakov\source\repos\WpfVjezba\WpfVjezba\obj\Debug\WpfVjezba.csproj.CoreCompileInputs.cache
 C:\Users\Jakov\source\repos\WpfVjezba\WpfVjezba\obj\Debug\WpfVjezba.exe
 C:\Users\Jakov\source\repos\WpfVjezba\WpfVjezba\obj\Debug\WpfVjezba.pdb
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\bin\Debug\WpfVjezba.exe
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\bin\Debug\WpfVjezba.pdb
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba.csprojResolveAssemblyReference.cache
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\MainWindow.g.cs
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\App.g.cs
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba_MarkupCompile.cache
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba_MarkupCompile.lref
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\MainWindow.baml
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba.g.resources
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba.Properties.Resources.resources
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba.csproj.GenerateResource.Cache
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba.csproj.CoreCompileInputs.cache
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba.exe
+C:\Users\Jakov\Source\Repos\Basic-Calculator\WpfVjezba\obj\Debug\WpfVjezba.pdb

@@ -67,9 +67,16 @@ namespace WpfVjezba
                 {
                     return false;
                 }
+
+                // 3. case: if there are incompatible operators next to each other
+                else if ((expression[expression.Length - 1] == operators[2] || expression[expression.Length - 1] == operators[3])
+                    && symbol == operators[2] || symbol == operators[3])
+                {
+                    return false;
+                }
             }
 
-            // 3. case: if the * and / are to be put at the beginning
+            // 4. case: if the * and / are to be put at the beginning
             else if (symbol == operators[2] || symbol == operators[3])
             {
                 return false;
@@ -162,6 +169,11 @@ namespace WpfVjezba
                 default:
                     return "Error!";
             }
+        }
+
+        private void Button_Remove_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxCalc.Text = TextBoxCalc.Text.Remove(TextBoxCalc.Text.Length - 1);
         }
     }
 }

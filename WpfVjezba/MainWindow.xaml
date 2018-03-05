@@ -25,7 +25,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <TextBox Name ="TextBoxCalc" Grid.Row="0" Grid.ColumnSpan="4" TextWrapping="Wrap" FontSize="40" IsReadOnly="True"/>
+        <TextBox Name ="TextBoxCalc" Grid.Row="0" Grid.ColumnSpan="3" TextWrapping="Wrap" FontSize="40" IsReadOnly="True"/>
+        <Button Name ="Button_Remove" Content="X" FontSize="35" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="4" VerticalAlignment="Top"
+                Width="130" Height="65" Click="Button_Remove_Click"/>
         <Button Name ="Button_7" Content="_7" FontSize="35" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"
                 Width="130" Height="65" Click="Button_Click"/>
         <Button Name ="Button_8" Content="_8" FontSize="35" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top"
